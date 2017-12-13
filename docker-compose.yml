@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+    frontend_php:
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        ports:
+            - 9001:9000
+        volumes:
+            - .:/var/www/bittest
+        environment:
+            - XDEBUG_CONFIG=remote_host=${XDEBUG_HOST}
+            - PHP_IDE_CONFIG=serverName=bittest
+        links:
+            - frontend_db:mysql
+        depends_on:
+            - frontend_db
+    frontend_nginx:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        ports:
+            - 81:80
+        depends_on:
+            - frontend_db
+            - frontend_php
+        links:
+            - frontend_php:php
+        volumes_from:
+            - frontend_php
+    frontend_db:
+        image: mariadb:10.3
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_DATABASE: ${MDB_DATABASE}
+            MYSQL_USER: ${MDB_USER}
+            MYSQL_PASSWORD: ${MDB_PASSWORD}

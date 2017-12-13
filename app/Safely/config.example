@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Safely;
+
+function getSettings()
+{
+    return [
+        'version' => '1.0.0',
+        'db_host' => 'HOST',
+        'db_name' => 'DBNAME',
+        'db_user' => 'USER',
+        'db_pass' => 'PASS'
+    ];
+}

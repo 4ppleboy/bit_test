@@ -1,0 +1,12 @@
+# IDE
+/.idea/*
+
+# dependencies
+/vendor/
+
+# tests
+/reports/
+!/reports/.gitkeep
+
+# application
+/app/Safely/config.php
